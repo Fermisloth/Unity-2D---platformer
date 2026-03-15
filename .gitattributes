@@ -1,0 +1,14 @@
+# Auto-detect text files
+* text=auto
+
+# Unity YAML-based files
+*.cs text
+*.shader text
+*.cginc text
+*.unity text
+*.asset text
+*.prefab text
+*.mat text
+*.meta text
+*.anim text
+*.controller text
