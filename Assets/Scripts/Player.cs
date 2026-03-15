@@ -13,7 +13,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update at" + Time.time);
-    }
+        var horizontal = Input.GetAxis("Horizontal");
+        Debug.Log(horizontal);
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.linearVelocity = new Vector2(horizontal, rb.linearVelocity.y);
+    }   
 
 }
