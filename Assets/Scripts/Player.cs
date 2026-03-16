@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private float jumpEndTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,14 @@ public class Player : MonoBehaviour
         Debug.Log(horizontal);
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         var vertiacal = rb.linearVelocity.y;
+
         if (Input.GetButtonDown("Fire1"))
+
+            jumpEndTime = Time.time + 0.5f;
+                    
+                
+        if (Input.GetButton("Fire1") && jumpEndTime > Time.time)
+            
             vertiacal = 5;
 
         rb.linearVelocity = new Vector2(horizontal, vertiacal);
