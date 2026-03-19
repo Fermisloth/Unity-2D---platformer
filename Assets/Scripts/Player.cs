@@ -11,11 +11,11 @@ public class Player : MonoBehaviour
     [SerializeField] float _jumpvelocity = 5f;
     [SerializeField] float _jumpduraion = 0.5f;
     [SerializeField] Sprite _jumpSprite;
+    [SerializeField] float _footOffset = 0.5f;
 
     public bool IsGround;
 
-    private SpriteRenderer _spriteRenderer;
-    private Sprite _defaultSprite;
+    SpriteRenderer _spriteRenderer;
     private float _horizontal;
 
     private Rigidbody2D _rb;
@@ -24,8 +24,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _defaultSprite = _spriteRenderer.sprite;
-
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
@@ -33,9 +31,17 @@ public class Player : MonoBehaviour
     void OnDrawGizmos()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
-
         Gizmos.color = Color.red;
+        
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
+        Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
+        
+        //Draw Left Foot
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
+        Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
+
+        //Draw Right Foot
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
