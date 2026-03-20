@@ -62,7 +62,11 @@ public class Player : MonoBehaviour
         {
             jumpEndTime = Time.time + _jumpduraion;
             _jumpRemaining--;
+
+            _audioSource.pitch = (_jumpRemaining) > 0 ? 1 : 1.2f;
+
             _audioSource.Play();
+            
         }
 
         if (Input.GetButton("Fire1") && jumpEndTime > Time.time)
