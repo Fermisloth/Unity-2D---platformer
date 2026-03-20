@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Animator _animator;
+    private AudioSource _audioSource;
     int _jumpRemaining;
 
     private void Awake()
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void OnDrawGizmos()
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour
         {
             jumpEndTime = Time.time + _jumpduraion;
             _jumpRemaining--;
+            _audioSource.Play();
         }
 
         if (Input.GetButton("Fire1") && jumpEndTime > Time.time)
