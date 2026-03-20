@@ -1001,6 +1001,7 @@ MonoBehaviour:
   _jumpvelocity: 5.5
   _jumpduraion: 0.5
   _jumpSprite: {fileID: 3810435283219779972, guid: a7046de327190e245b20a5ba6b300724, type: 3}
+  _footOffset: 0.35
   IsGround: 0
 --- !u!95 &1867160066
 Animator:
