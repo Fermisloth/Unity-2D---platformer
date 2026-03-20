@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Animator _animator;
+    int _jumpRemaining;
 
     private void Awake()
     {
@@ -32,35 +33,34 @@ public class Player : MonoBehaviour
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Gizmos.color = Color.red;
-        
+
         Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
-        
-        //Draw Left Foot
+
+        // Draw Left Foot
         origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
-        //Draw Right Foot
+        // Draw Right Foot
         origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
     void Update()
     {
-        // Ground check
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
-        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
-
-        IsGround = hit.collider != null;
+        _updateGrounding();
 
         // Input
         _horizontal = Input.GetAxis("Horizontal");
 
         float vertical = _rb.linearVelocity.y;
 
-        // Jump logic
-        if (Input.GetButtonDown("Fire1") && IsGround)
+        // Jump logic (FIXED: added braces)
+        if (Input.GetButtonDown("Fire1") && _jumpRemaining > 0)
+        {
             jumpEndTime = Time.time + _jumpduraion;
+            _jumpRemaining--;
+        }
 
         if (Input.GetButton("Fire1") && jumpEndTime > Time.time)
             vertical = _jumpvelocity;
@@ -73,14 +73,38 @@ public class Player : MonoBehaviour
         UpdateSprite(horizontalVelocity);
     }
 
+    private void _updateGrounding()
+    {
+        IsGround = false;
+
+        // Ground center check
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
+        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
+        if (hit.collider)
+            IsGround = true;
+
+        // Ground right check
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
+        if (hit.collider)
+            IsGround = true;
+
+        // Ground left check
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
+        if (hit.collider)
+            IsGround = true;
+
+        if (IsGround && _rb.linearVelocity.y <= 0)
+            _jumpRemaining = 2;
+    }
+
     private void UpdateSprite(float horizontalVelocity)
     {
         _animator.SetBool("IsGrounded", IsGround);
 
-        // Use ABS value so left/right doesn't break transitions
         _animator.SetFloat("Horizontal_velocity", Mathf.Abs(horizontalVelocity));
 
-        // Flip sprite
         if (horizontalVelocity > 0)
             _spriteRenderer.flipX = false;
         else if (horizontalVelocity < 0)
