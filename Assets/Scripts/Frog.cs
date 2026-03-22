@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Frog : MonoBehaviour
 {
+    AudioSource _audioSource;
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Sprite _defaultSprite;
@@ -15,6 +16,7 @@ public class Frog : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _defaultSprite = _spriteRenderer.sprite;
@@ -41,5 +43,6 @@ public class Frog : MonoBehaviour
      void OnCollisionEnter2D(Collision2D collision)
     {
         _spriteRenderer.sprite = _defaultSprite;
+        _audioSource.Play();  
     }
 }
