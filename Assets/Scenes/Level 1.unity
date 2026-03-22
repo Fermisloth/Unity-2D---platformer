@@ -705,10 +705,8 @@ GameObject:
   m_Component:
   - component: {fileID: 673420093}
   - component: {fileID: 673420092}
-  - component: {fileID: 673420095}
-  - component: {fileID: 673420094}
   m_Layer: 0
-  m_Name: blue_grass_0
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -788,70 +786,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &673420094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673420091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f86fbc54ca41ce47a0d0ab50c56634e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LoadLevel
-  _levelName: Level 2
---- !u!60 &673420095
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673420091}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.24, y: 10.24}
-    newSize: {x: 240, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 2
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -5.12, y: 5.12}
-      - {x: -5.12, y: -5.12}
-      - {x: 5.12, y: -5.12}
-      - {x: 5.12, y: 5.12}
-  m_UseDelaunayMesh: 1
 --- !u!4 &943553553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8855570125441487544, guid: 2c9ca55a1033c8741b6d50f1f6a0c0da, type: 3}
@@ -1921,10 +1855,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2456773073003408113, guid: 43bd6a5b7de76974d924bad2d3a42fd2, type: 3}
-      propertyPath: _levelName
-      value: Level 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7090605117657737150, guid: 43bd6a5b7de76974d924bad2d3a42fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 26.380045
