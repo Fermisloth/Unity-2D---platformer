@@ -5,26 +5,34 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // Time until jump force stops being applied
     float jumpEndTime;
 
-    [SerializeField] float _horizontalvelocity = 3f;
+    // Movement + jump settings (editable in inspector)
+    [SerializeField] float _maxHorizontalSpeed = 5f;
     [SerializeField] float _jumpvelocity = 5f;
     [SerializeField] float _jumpduraion = 0.5f;
     [SerializeField] Sprite _jumpSprite;
     [SerializeField] float _footOffset = 0.5f;
+    [SerializeField] float _acceleration = 10f;
 
+    // Ground state
     public bool IsGround;
 
+    // Cached components
     SpriteRenderer _spriteRenderer;
-    private float _horizontal;
+    float _horizontal;
 
     private Rigidbody2D _rb;
     private Animator _animator;
     private AudioSource _audioSource;
+
+    // Remaining jumps (for double jump etc.)
     int _jumpRemaining;
 
     private void Awake()
     {
+        // Cache components for performance
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -33,88 +41,133 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        // Draw debug lines for ground detection rays
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Gizmos.color = Color.red;
 
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
+        // Center ray
+        Vector2 origin = new Vector2(
+            transform.position.x,
+            transform.position.y - spriteRenderer.bounds.extents.y
+        );
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
-        // Draw Left Foot
-        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
+        // Left foot ray
+        origin = new Vector2(
+            transform.position.x - _footOffset,
+            transform.position.y - spriteRenderer.bounds.extents.y
+        );
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
-        // Draw Right Foot
-        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.bounds.extents.y);
+        // Right foot ray
+        origin = new Vector2(
+            transform.position.x + _footOffset,
+            transform.position.y - spriteRenderer.bounds.extents.y
+        );
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
     void Update()
     {
+        // Update ground detection
         _updateGrounding();
 
-        // Input
-        _horizontal = Input.GetAxis("Horizontal");
+        // Get horizontal input (-1 to 1)
+        var horizontalInput = Input.GetAxis("Horizontal");
 
+        // Keep current vertical velocity (gravity or jump)
         float vertical = _rb.linearVelocity.y;
 
-        // Jump logic (FIXED: added braces)
+        // Jump start (button pressed)
         if (Input.GetButtonDown("Fire1") && _jumpRemaining > 0)
         {
+            // Set how long jump can be held
             jumpEndTime = Time.time + _jumpduraion;
+
+            // Reduce available jumps
             _jumpRemaining--;
 
+            // Slight pitch variation for second jump
             _audioSource.pitch = (_jumpRemaining) > 0 ? 1 : 1.2f;
 
+            // Play jump sound
             _audioSource.Play();
-            
         }
 
+        // Continue jump while button is held
         if (Input.GetButton("Fire1") && jumpEndTime > Time.time)
+        {
             vertical = _jumpvelocity;
+        }
 
-        // Apply horizontal movement with cap
-        float horizontalVelocity = _horizontal * _horizontalvelocity;
+        // Target horizontal speed based on input
+        var desiredHorizontal = horizontalInput * _maxHorizontalSpeed;
 
-        _rb.linearVelocity = new Vector2(horizontalVelocity, vertical);
+        // Smoothly move toward target speed (FIXED: assignment, not multiplication)
+        _horizontal = Mathf.Lerp(
+            _horizontal,
+            desiredHorizontal,
+            Time.deltaTime * _acceleration
+        );
 
-        UpdateSprite(horizontalVelocity);
+        // Apply velocity to Rigidbody
+        _rb.linearVelocity = new Vector2(_horizontal, vertical);
+
+        // Update animations and sprite direction
+        UpdateSprite();
     }
 
     private void _updateGrounding()
     {
         IsGround = false;
 
-        // Ground center check
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
+        // Center ground check
+        Vector2 origin = new Vector2(
+            transform.position.x,
+            transform.position.y - _spriteRenderer.bounds.extents.y
+        );
+
         var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider)
             IsGround = true;
 
-        // Ground right check
-        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
+        // Right ground check
+        origin = new Vector2(
+            transform.position.x + _footOffset,
+            transform.position.y - _spriteRenderer.bounds.extents.y
+        );
+
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider)
             IsGround = true;
 
-        // Ground left check
-        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - _spriteRenderer.bounds.extents.y);
+        // Left ground check
+        origin = new Vector2(
+            transform.position.x - _footOffset,
+            transform.position.y - _spriteRenderer.bounds.extents.y
+        );
+
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider)
             IsGround = true;
 
+        // Reset jumps when grounded and not moving upward
         if (IsGround && _rb.linearVelocity.y <= 0)
+        {
             _jumpRemaining = 2;
+        }
     }
 
-    private void UpdateSprite(float horizontalVelocity)
+    private void UpdateSprite()
     {
+        // Update animator parameters
         _animator.SetBool("IsGrounded", IsGround);
+        _animator.SetFloat("Horizontal_velocity", Mathf.Abs(_horizontal));
 
-        _animator.SetFloat("Horizontal_velocity", Mathf.Abs(horizontalVelocity));
-
-        if (horizontalVelocity > 0)
+        // Flip sprite based on direction
+        if (_horizontal > 0)
             _spriteRenderer.flipX = false;
-        else if (horizontalVelocity < 0)
+        else if (_horizontal < 0)
             _spriteRenderer.flipX = true;
     }
 }
