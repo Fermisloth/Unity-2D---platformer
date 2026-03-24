@@ -14,10 +14,12 @@ public class Player : MonoBehaviour
     [SerializeField] float _jumpduraion = 0.5f;
     [SerializeField] Sprite _jumpSprite;
     [SerializeField] float _footOffset = 0.5f;
-    [SerializeField] float _acceleration = 10f;
+    [SerializeField] float _groundAcceleration = 10f;
+    [SerializeField] float _snowAcceleration = 1f;
 
     // Ground state
     public bool IsGround;
+    public bool IsOnSnow;
 
     // Cached components
     SpriteRenderer _spriteRenderer;
@@ -102,12 +104,13 @@ public class Player : MonoBehaviour
 
         // Target horizontal speed based on input
         var desiredHorizontal = horizontalInput * _maxHorizontalSpeed;
+        var acceleration = IsOnSnow ? _snowAcceleration : _groundAcceleration;
 
         // Smoothly move toward target speed (FIXED: assignment, not multiplication)
         _horizontal = Mathf.Lerp(
             _horizontal,
             desiredHorizontal,
-            Time.deltaTime * _acceleration
+            Time.deltaTime * acceleration
         );
 
         // Apply velocity to Rigidbody
@@ -129,8 +132,11 @@ public class Player : MonoBehaviour
 
         var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider)
+        {
             IsGround = true;
-
+            IsOnSnow = hit.collider.CompareTag("Snow");
+        }
+           
         // Right ground check
         origin = new Vector2(
             transform.position.x + _footOffset,
@@ -139,8 +145,10 @@ public class Player : MonoBehaviour
 
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider)
+        {
             IsGround = true;
-
+            IsOnSnow = hit.collider.CompareTag("Snow");
+        }
         // Left ground check
         origin = new Vector2(
             transform.position.x - _footOffset,
@@ -149,8 +157,10 @@ public class Player : MonoBehaviour
 
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider)
+        {
             IsGround = true;
-
+            IsOnSnow = hit.collider.CompareTag("Snow");
+        }
         // Reset jumps when grounded and not moving upward
         if (IsGround && _rb.linearVelocity.y <= 0)
         {

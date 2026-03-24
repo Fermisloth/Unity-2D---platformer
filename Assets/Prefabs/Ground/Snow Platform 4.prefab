@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1546747466749284900, guid: 2c9ca55a1033c8741b6d50f1f6a0c0da, type: 3}
       propertyPath: m_Name
-      value: Grass Platform 4 Variant
+      value: Snow Platform 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546747466749284900, guid: 2c9ca55a1033c8741b6d50f1f6a0c0da, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     - target: {fileID: 1616283666046047029, guid: 2c9ca55a1033c8741b6d50f1f6a0c0da, type: 3}
       propertyPath: m_Sprite

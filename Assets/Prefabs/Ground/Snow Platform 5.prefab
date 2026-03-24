@@ -54,7 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6277862733622557291, guid: aa9511bc20d72214596718d4c6189b39, type: 3}
       propertyPath: m_Name
-      value: Grass Platform 5 Variant
+      value: Snow Platform 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6277862733622557291, guid: aa9511bc20d72214596718d4c6189b39, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     - target: {fileID: 6371508270756433116, guid: aa9511bc20d72214596718d4c6189b39, type: 3}
       propertyPath: m_Sprite
