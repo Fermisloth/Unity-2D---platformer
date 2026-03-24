@@ -1123,9 +1123,10 @@ MonoBehaviour:
   _jumpduraion: 0.5
   _jumpSprite: {fileID: 3810435283219779972, guid: a7046de327190e245b20a5ba6b300724, type: 3}
   _footOffset: 0.2
-  _acceleration: 10
+  _groundAcceleration: 10
   _snowAcceleration: 1
   IsGround: 0
+  IsOnSnow: 0
 --- !u!95 &1867160066
 Animator:
   serializedVersion: 7
@@ -1530,6 +1531,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass Platform 6
       objectReference: {fileID: 0}
+    - target: {fileID: 966334503142398364, guid: 7b752643ce611bb4b90626d7e5e649e3, type: 3}
+      propertyPath: m_TagString
+      value: Snow
+      objectReference: {fileID: 0}
     - target: {fileID: 2429441950394358204, guid: 7b752643ce611bb4b90626d7e5e649e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17
@@ -1626,6 +1631,10 @@ PrefabInstance:
     - target: {fileID: 8685363143240834067, guid: 7d434624dc2cbcc4e939a5034760ddd8, type: 3}
       propertyPath: m_Name
       value: Grass Platform 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8685363143240834067, guid: 7d434624dc2cbcc4e939a5034760ddd8, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1797,6 +1806,10 @@ PrefabInstance:
     - target: {fileID: 9211373215746722810, guid: 3dd6ff244d305174d9d1c01b2f71e88c, type: 3}
       propertyPath: m_Name
       value: Grass Platform 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211373215746722810, guid: 3dd6ff244d305174d9d1c01b2f71e88c, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
