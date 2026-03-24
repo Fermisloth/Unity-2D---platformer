@@ -62,7 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 7538147134619460060, guid: 979345922f8f51c4eb84636fa73cf945, type: 3}
     - target: {fileID: 8977752600604753844, guid: 59359cda975a34d42af213a0052d0d78, type: 3}
       propertyPath: m_Name
-      value: Grass Platform 6 Variant
+      value: Snow Platform  6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977752600604753844, guid: 59359cda975a34d42af213a0052d0d78, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
