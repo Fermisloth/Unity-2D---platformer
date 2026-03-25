@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -25,9 +26,10 @@ public class Player : MonoBehaviour
     SpriteRenderer _spriteRenderer;
     float _horizontal;
 
-    private Rigidbody2D _rb;
-    private Animator _animator;
-    private AudioSource _audioSource;
+    Rigidbody2D _rb;
+    Animator _animator;
+    AudioSource _audioSource;
+    PlayerInput _playerInput;
 
     // Remaining jumps (for double jump etc.)
     int _jumpRemaining;
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     void OnDrawGizmos()
@@ -75,13 +78,13 @@ public class Player : MonoBehaviour
         _updateGrounding();
 
         // Get horizontal input (-1 to 1)
-        var horizontalInput = Input.GetAxis("Horizontal");
+        var horizontalInput = _playerInput.actions["Move"].ReadValue<Vector2>().x;
 
         // Keep current vertical velocity (gravity or jump)
         float vertical = _rb.linearVelocity.y;
 
         // Jump start (button pressed)
-        if (Input.GetButtonDown("Fire1") && _jumpRemaining > 0)
+        if (_playerInput.actions["Jump"].WasPerformedThisFrame() && _jumpRemaining > 0)
         {
             // Set how long jump can be held
             jumpEndTime = Time.time + _jumpduraion;
@@ -97,7 +100,7 @@ public class Player : MonoBehaviour
         }
 
         // Continue jump while button is held
-        if (Input.GetButton("Fire1") && jumpEndTime > Time.time)
+        if (_playerInput.actions["Jump"].ReadValue<float>() > 0 && jumpEndTime > Time.time)
         {
             vertical = _jumpvelocity;
         }
