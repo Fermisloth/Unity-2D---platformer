@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    // Time until jump force stops being applied
-    float jumpEndTime;
-
     // Movement + jump settings (editable in inspector)
     [SerializeField] float _maxHorizontalSpeed = 5f;
     [SerializeField] float _jumpvelocity = 5f;
@@ -17,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _footOffset = 0.5f;
     [SerializeField] float _groundAcceleration = 10f;
     [SerializeField] float _snowAcceleration = 1f;
+    [SerializeField] AudioClip _coinsfk;
 
     // Ground state
     public bool IsGround;
@@ -24,8 +22,6 @@ public class Player : MonoBehaviour
 
     // Cached components
     SpriteRenderer _spriteRenderer;
-    float _horizontal;
-
     Rigidbody2D _rb;
     Animator _animator;
     AudioSource _audioSource;
@@ -33,6 +29,11 @@ public class Player : MonoBehaviour
 
     // Remaining jumps (for double jump etc.)
     int _jumpRemaining;
+    // Time until jump force stops being applied
+    float jumpEndTime;
+    float _horizontal;
+
+    public int Coins { get; private set; }
 
     private void Awake()
     {
@@ -42,6 +43,8 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _playerInput = GetComponent<PlayerInput>();
+
+        FindAnyObjectByType<PlayerPanel>().Bind(this);
     }
 
     void OnDrawGizmos()
@@ -182,5 +185,11 @@ public class Player : MonoBehaviour
             _spriteRenderer.flipX = false;
         else if (_horizontal < 0)
             _spriteRenderer.flipX = true;
+    }
+
+    public void AddPoint()
+    {
+        Coins++;
+        _audioSource.PlayOneShot(_coinsfk);
     }
 }
