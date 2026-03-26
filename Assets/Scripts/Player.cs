@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _footOffset = 0.5f;
     [SerializeField] float _groundAcceleration = 10f;
     [SerializeField] float _snowAcceleration = 1f;
+    [SerializeField] AudioClip _coinsfk;
 
     // Ground state
     public bool IsGround;
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     float jumpEndTime;
     int _coins;
     float _horizontal;
+
 
     private void Awake()
     {
@@ -186,5 +188,6 @@ public class Player : MonoBehaviour
     public void AddPoint()
     {
         _coins++;
+        _audioSource.PlayOneShot(_coinsfk);
     }
 }

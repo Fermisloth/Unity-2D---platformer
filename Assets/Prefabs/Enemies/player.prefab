@@ -416,6 +416,7 @@ MonoBehaviour:
   _footOffset: 0.2
   _groundAcceleration: 10
   _snowAcceleration: 1
+  _coinsfk: {fileID: 8300000, guid: 3b667f68ceebbde47b6f661b7dff0a00, type: 3}
   IsGround: 0
   IsOnSnow: 0
 --- !u!95 &1589194940914960000
