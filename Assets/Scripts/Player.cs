@@ -31,9 +31,9 @@ public class Player : MonoBehaviour
     int _jumpRemaining;
     // Time until jump force stops being applied
     float jumpEndTime;
-    int _coins;
     float _horizontal;
 
+    public int Coins { get; private set; }
 
     private void Awake()
     {
@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _playerInput = GetComponent<PlayerInput>();
+
+        FindAnyObjectByType<PlayerPanel>().Bind(this);
     }
 
     void OnDrawGizmos()
@@ -187,7 +189,7 @@ public class Player : MonoBehaviour
 
     public void AddPoint()
     {
-        _coins++;
+        Coins++;
         _audioSource.PlayOneShot(_coinsfk);
     }
 }
