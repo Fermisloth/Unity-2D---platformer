@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    // Time until jump force stops being applied
-    float jumpEndTime;
-
     // Movement + jump settings (editable in inspector)
     [SerializeField] float _maxHorizontalSpeed = 5f;
     [SerializeField] float _jumpvelocity = 5f;
@@ -24,8 +21,6 @@ public class Player : MonoBehaviour
 
     // Cached components
     SpriteRenderer _spriteRenderer;
-    float _horizontal;
-
     Rigidbody2D _rb;
     Animator _animator;
     AudioSource _audioSource;
@@ -33,6 +28,10 @@ public class Player : MonoBehaviour
 
     // Remaining jumps (for double jump etc.)
     int _jumpRemaining;
+    // Time until jump force stops being applied
+    float jumpEndTime;
+    int _coins;
+    float _horizontal;
 
     private void Awake()
     {
@@ -182,5 +181,10 @@ public class Player : MonoBehaviour
             _spriteRenderer.flipX = false;
         else if (_horizontal < 0)
             _spriteRenderer.flipX = true;
+    }
+
+    public void AddPoint()
+    {
+        _coins++;
     }
 }
