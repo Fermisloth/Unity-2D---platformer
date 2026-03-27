@@ -33,7 +33,8 @@ public class Player : MonoBehaviour
     float jumpEndTime;
     float _horizontal;
 
-    public int Coins { get; private set; }
+    PlayerData _playerData = new PlayerData();
+    public int Coins { get => _playerData.Coins; private set => _playerData.Coins = value; }
 
     private void Awake()
     {
@@ -192,4 +193,9 @@ public class Player : MonoBehaviour
         Coins++;
         _audioSource.PlayOneShot(_coinsfk);
     }
+}
+public class PlayerData 
+{
+    public int Coins;
+    public int Health;
 }

@@ -1136,7 +1136,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 81179903471333428, guid: 0720aa166dec9544c9c9b6f33cfa12a6, type: 3}
       propertyPath: m_Name
-      value: PlayerInputManager
+      value: PlayerInputManager & GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 3522467414741819035, guid: 0720aa166dec9544c9c9b6f33cfa12a6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1177,10 +1177,6 @@ PrefabInstance:
     - target: {fileID: 3522467414741819035, guid: 0720aa166dec9544c9c9b6f33cfa12a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7995180544171099426, guid: 0720aa166dec9544c9c9b6f33cfa12a6, type: 3}
-      propertyPath: m_SplitScreen
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7995180544171099426, guid: 0720aa166dec9544c9c9b6f33cfa12a6, type: 3}
       propertyPath: m_PlayerPrefab
