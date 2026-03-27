@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3522467414741819035}
   - component: {fileID: 7995180544171099426}
+  - component: {fileID: 284839884681533559}
   m_Layer: 0
-  m_Name: PlayerInputManager
+  m_Name: PlayerInputManager & GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +67,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 4063961561399707111, guid: be7a58465047ca946b09c0c8212c5a17, type: 3}
+  m_PlayerPrefab: {fileID: 0}
   m_SplitScreen: 1
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -76,3 +77,15 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &284839884681533559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81179903471333428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3f743604c044ec459f6d4aa532e8ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
