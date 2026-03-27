@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _playerInput = GetComponent<PlayerInput>();
 
-        FindAnyObjectByType<PlayerPanel>().Bind(this);
+        FindAnyObjectByType<PlayerCanvas>().Bind(this);
     }
 
     void OnDrawGizmos()
